@@ -6,26 +6,31 @@ import { Spinner } from "@/lib/spinner";
 import { joinClassNames } from "@/lib/join-classnames";
 import ReactConfetti from "react-confetti";
 import { useRouter } from "next/navigation";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 export function RedeemCodeForm({
   defaultRedeemCode,
+  telegramUsername,
 }: {
   defaultRedeemCode: string;
+  telegramUsername: string;
 }) {
   const router = useRouter();
+  const { primaryWallet, network } = useDynamicContext();
   const [redeemCode, setRedeemCode] = useState<string>(defaultRedeemCode);
   const [showModal, setShowModal] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
   const { mutateAsync: redeem, isPending, error } = useRedeem();
 
+  console.log("network", network);
   const triggerRedeem = async () => {
-    setShowModal(true);
+    if (!primaryWallet) return;
+
     await redeem({
       redeemCode,
-      walletAddress: "0x123",
-      telegramUsername: "telegramUser",
+      walletAddress: primaryWallet.address,
+      chain: primaryWallet.chain,
+      telegramUsername,
     });
-    setShowConfetti(true);
   };
 
   return (
@@ -77,7 +82,7 @@ export function RedeemCodeForm({
       )}
 
       <div className="mx-auto mt-10 flex max-w-md flex-col gap-x-4">
-        <div className="flex flex-row gap-x-2">
+        <div className="flex flex-col gap-x-2">
           <label htmlFor="email-address" className="sr-only">
             Email address
           </label>
@@ -91,17 +96,19 @@ export function RedeemCodeForm({
             autoComplete="redeem-code"
             className="min-w-0 flex-auto rounded-md border-2 border-white bg-black px-3.5 py-2 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           />
-          <button
-            type="submit"
-            onClick={triggerRedeem}
-            disabled={isPending}
-            className={joinClassNames(
-              isPending ? "cursor-not-allowed opacity-50" : "",
-              "flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200 active:bg-gray-300"
-            )}
-          >
-            {isPending ? "Redeeming" : "Redeem Code 🥳"}
-          </button>
+          <div className="flex flex-row gap-x-2 mt-3">
+            <button
+              type="submit"
+              onClick={triggerRedeem}
+              disabled={isPending}
+              className={joinClassNames(
+                isPending ? "cursor-not-allowed opacity-50" : "",
+                "flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200 active:bg-gray-300"
+              )}
+            >
+              {isPending ? "Redeeming" : "Redeem Code 🥳"}
+            </button>
+          </div>
         </div>
         {error && <p className="mt-1 text-red-500">{error.message}</p>}
       </div>

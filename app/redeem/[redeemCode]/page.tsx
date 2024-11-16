@@ -18,17 +18,9 @@ export default function RedeemPage({
   params: { redeemCode: string };
 }) {
   const isLoggedIn = useIsLoggedIn();
-  const { user } = useDynamicContext();
-  const {
-    linkSocialAccount,
-    unlinkSocialAccount,
-    isLinked,
-    getLinkedAccountInformation,
-  } = useSocialAccounts();
+  const { getLinkedAccountInformation } = useSocialAccounts();
 
   const telegramAccountInfo = getLinkedAccountInformation(provider);
-
-  console.log("telegramAccountInfo", telegramAccountInfo);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-white bg-black">
@@ -53,13 +45,17 @@ export default function RedeemPage({
                 <span className="text-xl font-medium">
                   {telegramAccountInfo.username || "Telegram User"}
                 </span>
-                
               </div>
             )}
             <div className="mt-6 flex justify-center">
               <DynamicWidget />
             </div>
-            <RedeemCodeForm defaultRedeemCode={params.redeemCode} />
+            {telegramAccountInfo && (
+              <RedeemCodeForm
+                defaultRedeemCode={params.redeemCode}
+                telegramUsername={telegramAccountInfo.username!}
+              />
+            )}
           </>
         ) : (
           <DynamicWidget />
