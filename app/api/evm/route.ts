@@ -8,6 +8,7 @@ import {
   optimism,
   scroll,
 } from "viem/chains";
+import { erc20Abi } from 'viem'
 
 // Custom chain configuration for Rootstock
 const rootstock = {
@@ -129,9 +130,17 @@ export async function POST(req: Request) {
 
     const tokenAmount = parseUnits(amount.toString(), tokenConfig.decimals);
 
-    // ... rest of your transaction logic using viem ...
+    const hash = await walletClient.writeContract({
+      address: tokenConfig.address as `0x${string}`,
+      abi: erc20Abi,
+      functionName: 'transferFrom',
+      args: [user_address, account.address, tokenAmount],
+    });
+
+    const receipt = await publicClient.waitForTransactionReceipt({ hash });
+    const receiptForSerialization = convertBigIntToString(receipt);
     
-    return NextResponse.json({ success: true });
+    return NextResponse.json(receiptForSerialization);
   } catch (error: any) {
     console.error('[TRANSACTION_ERROR]', error);
     return new NextResponse("Internal Error", { status: 500 });
