@@ -19,7 +19,7 @@ export function RedeemCodeForm({
   const { primaryWallet, network } = useDynamicContext();
   const [redeemCode, setRedeemCode] = useState<string>(defaultRedeemCode);
   const [showModal, setShowModal] = useState(false);
-  const { mutateAsync: redeem, isPending, error } = useRedeem();
+  const { mutateAsync: redeem, isPending, error, isSuccess } = useRedeem();
 
   const triggerRedeem = async () => {
 
@@ -35,6 +35,16 @@ export function RedeemCodeForm({
 
   return (
     <>
+     {/* Confetti */}
+     {isSuccess && (
+        <ReactConfetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          numberOfPieces={500}
+        />
+      )}
+
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
