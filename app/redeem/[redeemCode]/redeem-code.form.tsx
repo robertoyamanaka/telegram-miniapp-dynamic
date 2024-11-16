@@ -38,7 +38,7 @@ export function RedeemCodeForm({
             <div className="flex flex-col items-center gap-4">
               {isPending ? (
                 <div>
-                  <code className="font-mono bg-gray-800 px-2 py-1 rounded">
+                  <code className="font-mono  px-2 py-1 rounded">
                     Redeeming Gift Card...
                   </code>
                 </div>
@@ -67,7 +67,7 @@ export function RedeemCodeForm({
                       router.push("/");
                     }}
                   >
-                    Close
+                    Go Home
                   </button>
                 </div>
               )}
