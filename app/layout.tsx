@@ -8,6 +8,7 @@ import {
 } from "../lib/dynamic";
 
 import { GlobalWalletExtension } from "@dynamic-labs/global-wallet";
+import { Providers } from "@/lib/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
   }
   return (
     <html lang="en">
+      <Providers>
       <DynamicContextProvider
         settings={{
           environmentId: dynamicEnvId,
@@ -39,6 +41,7 @@ export default function RootLayout({
       >
         <body className={inter.className}>{children}</body>
       </DynamicContextProvider>
+      </Providers>
     </html>
   );
 }
