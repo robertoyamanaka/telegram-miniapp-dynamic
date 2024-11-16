@@ -44,7 +44,7 @@ export function RedeemCodeForm({
               {isPending ? (
                 <div>
                   <code className="font-mono  px-2 py-1 rounded">
-                    Redeeming Gift Card...
+                    Redeeming Code...
                   </code>
                 </div>
               ) : error ? (
@@ -63,7 +63,7 @@ export function RedeemCodeForm({
               ) : (
                 <div>
                   <p className="text-lg font-medium text-white">
-                    🎉🎉🎉 Gift Card Redeemed! 🎉🎉🎉
+                    🎉🎉🎉 Code Redeemed! 🎉🎉🎉
                   </p>
                   <button
                     className="mt-4 rounded-md bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200 active:bg-gray-300"
