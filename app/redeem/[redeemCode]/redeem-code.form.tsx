@@ -21,14 +21,14 @@ export function RedeemCodeForm({
   const [showModal, setShowModal] = useState(false);
   const { mutateAsync: redeem, isPending, error } = useRedeem();
 
-  console.log("network", network);
   const triggerRedeem = async () => {
-    if (!primaryWallet) return;
 
+    if (!primaryWallet || !network) return;
+    setShowModal(true);
     await redeem({
       redeemCode,
       walletAddress: primaryWallet.address,
-      chain: primaryWallet.chain,
+      network: network.toString(),
       telegramUsername,
     });
   };

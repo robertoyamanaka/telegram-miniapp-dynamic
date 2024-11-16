@@ -6,7 +6,7 @@ import { PrizeRedeem } from "@/lib/types";
 export type RedeemInput = {
   redeemCode: string;
   walletAddress: string;
-  chain: string;
+  network: string;
   telegramUsername: string;
 };
 // ... existing imports ...
@@ -21,7 +21,7 @@ export async function redeem({
   redeemCode,
   walletAddress,
   telegramUsername,
-  chain,
+  network,
 }: RedeemInput): Promise<RedeemResponse> {
   try {
     const supabase = await createSupabaseClient();
@@ -73,7 +73,7 @@ export async function redeem({
         prizeRedeemCode: redeemCode,
         walletAddress,
         telegramUsername,
-        chain,
+        network,
       })
       .select();
 
