@@ -40,9 +40,6 @@ export default function Main() {
           <div className="flex justify-center py-4">
             {isLoading ? <Spinner /> : <DynamicWidget />}
           </div>
-          <p className="mb-3">
-            Zero clicks, one multi-chain wallet. We automatically created an embedded wallet for you.
-          </p>
           <h3 className="text-lg font-semibold mb-2">How This works</h3>
           <ul className="list-disc list-inside mb-3 flex flex-col items-start">
             <li>We utilize the Telegram authentication token</li>
