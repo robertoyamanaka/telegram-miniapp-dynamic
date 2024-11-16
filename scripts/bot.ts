@@ -43,7 +43,7 @@ bot.start((ctx: any) => {
     TOKEN, // Use the bot token to sign the JWT
     { algorithm: "HS256" }
   );
-  console.log("[DEBUG] JWT generated for user", userData);
+  console.log("[DEBUG] JWT generated for the user", userData);
 
   // URL-encode the generated JWT for safe usage in a URL
   const encodedTelegramAuthToken = encodeURIComponent(telegramAuthToken);
